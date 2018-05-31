@@ -12,15 +12,15 @@
 #include <math.h>
 #include "mpi.h"
 
-#define N 1E11 			//Significa 1*10^7
-#define d 1E-11 			//Significa 1*10^-7
-#define d2 1E-22 		//Significa 1*10^-14
+//#define N 1E9 			//Significa 1*10^7
+//#define d 1E-9 			//Significa 1*10^-7
+//#define d2 1E-18 		//Significa 1*10^-14
 #define SEED 35791246
 #define PI 3.141592653589793238462643
 
 
-void trapezoidPI(int rank,int numP,MPI_Status status,int start, int stop);
-void monteCarloPI(int rank,int numP,MPI_Status status,int start, int stop);
+void trapezoidPI(int rank,int numP,MPI_Status status,int start, int stop,long long int N,double d, double d2);
+void monteCarloPI(int rank,int numP,MPI_Status status,int start, int stop,long long int N);
 
 int main (int argc, char* argv[])
 {
@@ -32,6 +32,63 @@ int main (int argc, char* argv[])
 	MPI_Init(&argc,&argv);
 	MPI_Comm_rank(MPI_COMM_WORLD,&rank);
 	MPI_Comm_size(MPI_COMM_WORLD,&numP);
+
+	double d,d2;
+	long long int N;
+	int command;
+	if(argc > 1)
+	{
+		command = atoi(argv[1]);
+		switch (command) {
+		case 1:
+			N = 1E2;
+			d = 1E-2;
+			d2 = 1E-4;
+			break;
+		case 2:
+			N = 1E3;
+			d = 1E-3;
+			d2 = 1E-6;
+			break;
+		case 3:
+			N = 1E4;
+			d = 1E-4;
+			d2 = 1E-8;
+			break;
+		case 4:
+			N = 1E5;
+			d = 1E-5;
+			d2 = 1E-10;
+			break;
+		case 5:
+			N = 1E6;
+			d = 1E-6;
+			d2 = 1E-12;
+			break;
+		case 6:
+			N = 1E7;
+			d = 1E-7;
+			d2 = 1E-14;
+			break;
+		case 7:
+			N = 1E8;
+			d = 1E-8;
+			d2 = 1E-16;
+			break;
+		case 8:
+			N = 1E9;
+			d = 1E-9;
+			d2 = 1E-18;
+			break;
+		default:
+			N = 1E7;
+			d = 1E-7;
+			d2 = 1E-14;
+			break;
+		}
+	}
+
+
 
 	int chunck = N / numP;
 	int remainder = fmod(N,numP); //(long)N % numP;
@@ -52,17 +109,16 @@ int main (int argc, char* argv[])
 	//End work partitioning
 
 
-	monteCarloPI(rank,numP,status,start,stop);
-	MPI_Barrier(MPI_COMM_WORLD);
+	monteCarloPI(rank,numP,status,start,stop,N);
 
-	trapezoidPI(rank,numP,status,start,stop);
+	trapezoidPI(rank,numP,status,start,stop,N,d,d2);
 
 	MPI_Finalize();
 	return 0;
 
 }
 
-void trapezoidPI(int rank,int numP,MPI_Status status,int start,int stop)
+void trapezoidPI(int rank,int numP,MPI_Status status,int start, int stop,long long int N,double d, double d2)
 {
 
 	long long int i;
@@ -71,15 +127,14 @@ void trapezoidPI(int rank,int numP,MPI_Status status,int start,int stop)
 	startTime = MPI_Wtime();
 	double piSum;
 
-	for (i=start; i<stop; i+=1)
+
+	for (i=start; i<=stop; i+=1)
 	{
 		x2=d2*i*i;
 		result+=1.0/(1.0+x2);
 
 	}
-
 	piSum=result;
-
 	if(rank != 0)
 	{
 		MPI_Send(&piSum,1,MPI_DOUBLE,0,0,MPI_COMM_WORLD);
@@ -98,6 +153,7 @@ void trapezoidPI(int rank,int numP,MPI_Status status,int start,int stop)
 			 * */
 			piSum+=recivedPI;
 		}
+
 		pi = 4*d*piSum;
 		printf("PI Trapezoid is approximately=%lf, error is %.16f\n", pi,pi-PI);
 		endTime = MPI_Wtime();
@@ -107,7 +163,7 @@ void trapezoidPI(int rank,int numP,MPI_Status status,int start,int stop)
 
 }
 
-void monteCarloPI(int rank,int numP,MPI_Status status,int start, int stop)
+void monteCarloPI(int rank,int numP,MPI_Status status,int start, int stop,long long int N)
 {
 	long long int i;
 	double x,y;
@@ -121,14 +177,18 @@ void monteCarloPI(int rank,int numP,MPI_Status status,int start, int stop)
 	srand(SEED);
 	count=0;
 
-	for ( i=start; i<stop; i++) {
+
+	for ( i=start; i<=stop; i++) {
+
 		x = (double)rand()/RAND_MAX;
 		y = (double)rand()/RAND_MAX;
 		z = x*x+y*y;
 		if (z<=1) count++;
+
 	}
 
 	piSum=count;
+
 
 
 	if(rank != 0)
@@ -138,6 +198,7 @@ void monteCarloPI(int rank,int numP,MPI_Status status,int start, int stop)
 	else
 	{
 		double recivedPI;
+
 		for(i = 1; i < numP; i++)
 		{
 			recivedPI = 0;
@@ -148,6 +209,7 @@ void monteCarloPI(int rank,int numP,MPI_Status status,int start, int stop)
 			 *il tempo di esecuzione migliora anche se di poco ~ 0,010 millisencodi in meno.
 			 * */
 			piSum+=recivedPI;
+
 		}
 		pi = (piSum*4)/N;
 		printf("PI MonteCarlo is approximately=%lf, error is %.16f\n", pi,pi-PI);
