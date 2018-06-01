@@ -47,17 +47,17 @@ Infatti all' interno di ogni iterazione, un processo MPI :
 
 #### Valore PI-greco
 
-![](/home/giovanni/Desktop/ProgettoPCPC/Immagini/Valore-PI.png)La approssimazione del  valore del pi-greco è stato computato con un numero che vanno 100 a 10000000000 e con quest'ultimo numero di iterazioni l'approssimazione del valore del pi-greco è la più accurata per entrambi i metodi. 
+![](/home/giovanni/Desktop/GitFolder/ProgettoPCPC/Immagini/Valore-PI.png)La approssimazione del  valore del pi-greco è stato computato con un numero che vanno 100 a 10000000000 e con quest'ultimo numero di iterazioni l'approssimazione del valore del pi-greco è la più accurata per entrambi i metodi. 
 
 #### Strong scalability
 
-![](/home/giovanni/Desktop/ProgettoPCPC/Immagini/Strong.png)
+![](/home/giovanni/Desktop/GitFolder/ProgettoPCPC/Immagini/Strong.png)
 
-Sull'asse delle y abbiamo il tempo in secondi, mentre sull'asse delle x abbiamo il numero di processi MPI. I test sono stati soddisfacenti, mostrando una grande scalabilità del codice. Infatti il tempo di esecuzione è passato da circa 24 secondi utilizzando un solo processo mpi fino ad arrivare a circa 1 secondi con 32 processi mpi per il metodo di montecarlo. Invece per il metodo del trapezio il tempo di esecuzione è passato da circa 13  secondi utilizzando un solo processo mpi fino ad arrivare a circa 1 secondi con 32 processi mpi per il metodo di montecarlo. Il tutto sul di un numero di iterazioni pari ad 10000000000.
+Sull'asse delle y abbiamo il tempo in secondi, mentre sull'asse delle x abbiamo il numero di processi MPI. I test sono stati soddisfacenti, mostrando una grande scalabilità del codice. Infatti il tempo di esecuzione è passato da circa 24 secondi utilizzando un solo processo mpi fino ad arrivare a circa 1 secondi con 32 processi mpi per il metodo di montecarlo. Invece per il metodo del trapezio il tempo di esecuzione è passato da circa 13  secondi utilizzando un solo processo mpi fino ad arrivare a circa 0,41 secondi con 32 processi mpi per il metodo di montecarlo. Il tutto sul di un numero di iterazioni pari ad 10000000000.
 
 #### Weak scalability
 
-![](/home/giovanni/Desktop/ProgettoPCPC/Immagini/weack.png)
+![](/home/giovanni/Desktop/GitFolder/ProgettoPCPC/Immagini/weack.png)
 
 Sull'asse delle y abbiamo il tempo in secondi, mentre sull' asse delle x abbiamo il numero di processi mpi. In questo tipo di test ci aspettiamo una linea orizzontale, assicurandoci che aumentando la taglia dell' input e il numero di processi mpi, in modo tale che il rapporto tra i due sia costante, il tempo del programma rimane invariato. Utilizzando lo scambio di messaggi previsti da mpi, ovviamente, il tempo non può essere costante perché spendiamo tempo per scambiare dati tra i processi.
 
