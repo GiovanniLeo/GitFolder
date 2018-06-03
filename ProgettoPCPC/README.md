@@ -51,15 +51,17 @@ Infatti all' interno di ogni iterazione, un processo MPI :
 
 #### Strong scalability
 
-![](/home/giovanni/Desktop/GitFolder/ProgettoPCPC/Immagini/Strong.png)
+![](../ProgettoPCPC/Immagini/Strong.png)
 
-Sull'asse delle y abbiamo il tempo in secondi, mentre sull'asse delle x abbiamo il numero di processi MPI. I test sono stati soddisfacenti, mostrando una grande scalabilità del codice. Infatti il tempo di esecuzione è passato da circa 24 secondi utilizzando un solo processo mpi fino ad arrivare a circa 1 secondi con 32 processi mpi per il metodo di montecarlo. Invece per il metodo del trapezio il tempo di esecuzione è passato da circa 13  secondi utilizzando un solo processo mpi fino ad arrivare a circa 0,41 secondi con 32 processi mpi per il metodo di montecarlo. Il tutto sul di un numero di iterazioni pari ad 10000000000.
+Sull'asse delle y abbiamo il tempo in millisecondi, mentre sull'asse delle x abbiamo il numero di processi MPI. I test sono stati soddisfacenti, mostrando una grande scalabilità del codice. Infatti il tempo di esecuzione è passato da circa 24222 millisecondi utilizzando un solo processo mpi fino ad arrivare a circa 1285 millisecondi con 32 processi mpi per il metodo di montecarlo. Invece per il metodo del trapezio il tempo di esecuzione è passato da circa 13033  millisecondi utilizzando un solo processo mpi fino ad arrivare a circa 416 millisecondi con 32 processi mpi. Il tutto sul di un numero di iterazioni pari ad 10000000000.
 
 #### Weak scalability
 
-![](/home/giovanni/Desktop/GitFolder/ProgettoPCPC/Immagini/weack.png)
+![](../ProgettoPCPC/Immagini/Weak.png)
 
-Sull'asse delle y abbiamo il tempo in secondi, mentre sull' asse delle x abbiamo il numero di processi mpi. In questo tipo di test ci aspettiamo una linea orizzontale, assicurandoci che aumentando la taglia dell' input e il numero di processi mpi, in modo tale che il rapporto tra i due sia costante, il tempo del programma rimane invariato. Utilizzando lo scambio di messaggi previsti da mpi, ovviamente, il tempo non può essere costante perché spendiamo tempo per scambiare dati tra i processi.
+Sull'asse delle y abbiamo il tempo in millisecondi, mentre sull' asse delle x abbiamo il numero di processi mpi. In questo tipo di test ci aspettiamo una linea orizzontale, assicurandoci che aumentando la taglia dell' input e il numero di processi mpi, in modo tale che il rapporto tra i due sia costante, il tempo del programma rimane invariato. Utilizzando lo scambio di messaggi previsti da mpi, ovviamente, il tempo non può essere costante perché spendiamo tempo per scambiare dati tra i processi. In tale test il numero di iterazioni iniziali N è 10000000 e tale numero viene aumentato in relazione al numero di processi utilizzati seguendo questa formula **np*N** dove **np** è il numero di processi.
+
+
 
 ### **Compilazione**
 
@@ -98,6 +100,6 @@ Invence se lo si vuole lanciare in locale:
   - Se il valore è 7 allora il numero di iterazioni per il metodo del trapezio e montecarlosaranno 100000000 iterazioni.
   - Se il valore è 8 allora il numero di iterazioni per il metodo del trapezio e montecarlo saranno 1000000000 iterazioni.
   - Se non viene specificato nessun valore fra quelli sopra elencati allora il numero di iterazioni per il metodo del trapezio e montecarlo saranno 10000000 iterazioni, ignora il fattore moltiplicativo a differenza di quelli sopra elencati.
-- **z**: Indica un fattore moltiplicaticativo per la taglia dell'input **utilizzato solo al fine dei test su amazon** esso assume valore da 1 a 4, inoltre non sono stati effuttuati controlli sull'input poichè utilizzata solo a questo fine. **Si consiglia di lanciale il progamma in locale con tale parametro settato ad 1 poichè gli altri valori sono serviti solo ed esclusivamente per i test su amazon**.
+- **z**: Indica un fattore moltiplicaticativo per la taglia dell'input **utilizzato solo al fine dei test su amazon**  inoltre non sono stati effuttuati controlli sull'input poichè utilizzata solo a questo fine. **Si consiglia di lanciale il progamma in locale con tale parametro settato ad 1 poichè gli altri valori sono serviti solo ed esclusivamente per i test su amazon**.
 
 Nel comando per lanciare il programma su aws è stato specificato `IPSlaves` poichè dobbiamo inserire gli ip locali relativi alle 7 macchine slave.
