@@ -47,9 +47,7 @@ Infatti all' interno di ogni iterazione, un processo MPI :
 
 #### Valore PI-greco
 
-![Value](https://github.com/GiovanniLeo/GitFolder/blob/master/ProgettoPCPC/Immagini/Valore-PI.png)
-
-La approssimazione del  valore del pi-greco è stato computato con un numero che vanno 100 a 10000000000 e con quest'ultimo numero di iterazioni l'approssimazione del valore del pi-greco è la più accurata per entrambi i metodi. 
+![](/home/giovanni/Desktop/GitFolder/ProgettoPCPC/Immagini/Valore-PI.png)La approssimazione del  valore del pi-greco è stato computato con un numero che vanno 100 a 10000000000 e con quest'ultimo numero di iterazioni l'approssimazione del valore del pi-greco è la più accurata per entrambi i metodi. 
 
 #### Strong scalability
 
