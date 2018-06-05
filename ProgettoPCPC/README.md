@@ -63,6 +63,10 @@ Sull'asse delle y abbiamo il tempo in millisecondi, mentre sull'asse delle x abb
 
 Sull'asse delle y abbiamo il tempo in millisecondi, mentre sull' asse delle x abbiamo il numero di processi mpi. In questo tipo di test ci aspettiamo una linea orizzontale, assicurandoci che aumentando la taglia dell' input e il numero di processi mpi, in modo tale che il rapporto tra i due sia costante, il tempo del programma rimane invariato. Utilizzando lo scambio di messaggi previsti da mpi, ovviamente, il tempo non può essere costante perché spendiamo tempo per scambiare dati tra i processi. In tale test il numero di iterazioni iniziali N è 10000000 e tale numero viene aumentato in relazione al numero di processi utilizzati seguendo questa formula **np*N** dove **np** è il numero di processi.
 
+##### Considerazioni
+
+Dai test si è notato un peggioramneto delle prestazioni utilizzando dai 17 ai 25 processi mpi per risolvere il problema. Ma dai 26 processi mpi in poi  le performance sono migliorate, ciò forse è dovuto all'hypertreding dei processori.
+
 
 
 ### **Compilazione**
