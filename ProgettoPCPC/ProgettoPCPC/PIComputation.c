@@ -12,9 +12,6 @@
 #include <math.h>
 #include "mpi.h"
 
-//#define N 1E9 			//Significa 1*10^7
-//#define d 1E-9 			//Significa 1*10^-7
-//#define d2 1E-18 		//Significa 1*10^-14
 #define SEED 35791246
 #define PI 3.141592653589793238462643
 
@@ -93,7 +90,7 @@ int main (int argc, char* argv[])
 
 
 	int chunck = N / numP;
-	int remainder = fmod(N,numP); //(long)N % numP;
+	int remainder = fmod(N,numP); 
 	int start, stop;
 
 	//Start work partitioning
